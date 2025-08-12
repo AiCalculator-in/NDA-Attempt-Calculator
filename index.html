@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free NDA Attempt Calculator to check your remaining NDA exam attempts based on age, caste category, and eligibility criteria. Calculate your chances for NDA 2025 and beyond.">
+    <meta name="keywords" content="NDA calculator, NDA attempts, NDA eligibility, National Defence Academy, NDA exam, Indian Army, Navy, Air Force">
+    <meta name="author" content="AI Calculator">
+    <title>NDA Attempt Calculator - Check Your Remaining NDA Exam Attempts</title>
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="NDA Attempt Calculator - Check Your Remaining NDA Exam Attempts">
+    <meta property="og:description" content="Calculate your remaining NDA exam attempts based on age and category. Free tool for NDA aspirants.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aicalculator.in/">
+    
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        /* Calculator Widget Styles */
+        .nda-widget {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            transition: transform 0.3s ease;
+        }
+        
+        .nda-widget:hover {
+            transform: translateY(-5px);
+        }
+        
+        .widget-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .calculate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Content Sections */
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .content-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        
+        .content-section h3 {
+            color: #34495e;
+            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .content-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .content-section li {
+            margin-bottom: 8px;
+        }
+        
+        /* Category Tags */
+        .category-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        
+        .tag-sc { background: #9b59b6; }
+        .tag-st { background: #8e44ad; }
+        .tag-obc { background: #f39c12; }
+        .tag-ews, .tag-general { background: #34495e; }
+        
+        /* FAQ Section */
+        .faq-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        
+        .faq-question {
+            background: none;
+            border: none;
+            width: 100%;
+            padding: 15px 0;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question:hover {
+            color: #667eea;
+        }
+        
+        .faq-answer {
+            padding: 0 0 15px 0;
+            color: #555;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .faq-answer.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-icon.active {
+            transform: rotate(180deg);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Internal Links */
+        .internal-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .internal-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .nda-widget,
+            .content-section,
+            .faq-section {
+                padding: 20px;
+            }
+            
+            .widget-title {
+                font-size: 1.5rem;
+            }
+            
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .nda-widget,
+            .content-section,
+            .faq-section {
+                padding: 15px;
+            }
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>NDA Attempt Calculator</h1>
+            <p class="subtitle">Calculate your remaining National Defence Academy exam attempts based on age and category eligibility</p>
+        </header>
+
+        <!-- Calculator Widget -->
+        <section class="nda-widget" aria-labelledby="widget-title">
+            <h2 id="widget-title" class="widget-title">Check Your NDA Eligibility</h2>
+            
+            <form id="ndaForm" novalidate>
+                <div class="form-group">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" name="dob" required aria-required="true" max="2010-01-01">
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required aria-required="true">
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="caste">Caste Category:</label>
+                    <select id="caste" name="caste" required aria-required="true">
+                        <option value="">Select Caste Category</option>
+                        <option value="SC">SC (Scheduled Caste)</option>
+                        <option value="ST">ST (Scheduled Tribe)</option>
+                        <option value="OBC">OBC (Other Backward Class)</option>
+                        <option value="EWS">EWS (Economically Weaker Section)</option>
+                        <option value="General">General Category</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="calculate-btn">Check Eligibility & Calculate Attempts</button>
+            </form>
+        </section>
+
+        <!-- About NDA Section -->
+        <section class="content-section">
+            <h2>What is the NDA Exam?</h2>
+            <p>The <strong>National Defence Academy (NDA)</strong> examination is a prestigious competitive exam conducted by the Union Public Service Commission (UPSC) twice a year. This exam serves as the gateway for young aspirants to join the Indian Armed Forces as officers in the Army, Navy, and Air Force.</p>
+            
+            <p>The NDA exam is held in two phases annually - <strong>NDA 1</strong> (usually in April) and <strong>NDA 2</strong> (usually in September/October). Successful candidates undergo rigorous training at the National Defence Academy in Pune, one of the world's finest military academies.</p>
+
+            <h3>Why is Age Eligibility Important?</h3>
+            <p>Age eligibility is crucial for NDA aspirants as it determines how many attempts you have at this prestigious examination. The Indian government has set specific age limits based on different caste categories to ensure fair representation and opportunities for all sections of society.</p>
+
+            <h3>Age Limits by Category</h3>
+            <ul>
+                <li><span class="category-tag tag-general">General</span> <strong>General Category:</strong> Maximum age of 18 years (born not earlier than 2nd July of the exam year minus 19 and not later than 1st July of the exam year minus 16)</li>
+                <li><span class="category-tag tag-ews">EWS</span> <strong>EWS Category:</strong> Maximum age of 18 years (same as General category)</li>
+                <li><span class="category-tag tag-obc">OBC</span> <strong>OBC Category:</strong> Maximum age of 19.5 years (additional 1.5 years relaxation)</li>
+                <li><span class="category-tag tag-sc">SC</span> <strong>SC Category:</strong> Maximum age of 21 years (additional 3 years relaxation)</li>
+                <li><span class="category-tag tag-st">ST</span> <strong>ST Category:</strong> Maximum age of 21 years (additional 3 years relaxation)</li>
+            </ul>
+        </section>
+
+        <!-- How Calculator Works -->
+        <section class="content-section">
+            <h2>How Does Our NDA Attempt Calculator Work?</h2>
+            <p>Our <a href="https://aicalculator.in/nda-attempt-calculator/" class="internal-link">NDA Attempt Calculator</a> is designed to provide accurate and instant results about your remaining NDA exam attempts. Here's how it works:</p>
+
+            <h3>Step-by-Step Process:</h3>
+            <ol>
+                <li><strong>Enter Your Date of Birth:</strong> The calculator uses your birth date to determine your exact age on each NDA exam cutoff date.</li>
+                <li><strong>Select Your Gender:</strong> Currently, the NDA exam is open to both male and female candidates.</li>
+                <li><strong>Choose Your Caste Category:</strong> This determines your maximum age limit for eligibility.</li>
+                <li><strong>Automatic Calculation:</strong> The tool calculates your age on each NDA exam date (April 1st and October 1st) for the next 5 years.</li>
+                <li><strong>Results Display:</strong> You'll see exactly which NDA exams you're eligible for and your total remaining attempts.</li>
+            </ol>
+
+            <h3>Why Use This Calculator?</h3>
+            <ul>
+                <li><strong>Accurate Planning:</strong> Know exactly how many chances you have at your dream career</li>
+                <li><strong>Strategic Preparation:</strong> Plan your preparation timeline based on remaining attempts</li>
+                <li><strong>Avoid Disappointment:</strong> Prevent last-minute eligibility surprises</li>
+                <li><strong>Free and Instant:</strong> No registration required, get results immediately</li>
+                <li><strong>Mobile Friendly:</strong> Use on any device, anywhere, anytime</li>
+            </ul>
+
+            <p>Remember, the NDA exam has no limit on the number of attempts as long as you meet the age criteria. This makes age eligibility the most critical factor in determining your chances of joining the armed forces through NDA.</p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions (FAQ)</h2>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    What is the maximum age limit for NDA exam?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>The maximum age limit varies by category: General/EWS candidates can be maximum 18 years old, OBC candidates can be maximum 19.5 years old, and SC/ST candidates can be maximum 21 years old on the cutoff date (April 1st for NDA 1 and October 1st for NDA 2).</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    How many times can I attempt the NDA exam?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>There is no limit on the number of attempts for the NDA exam. You can appear for the exam as many times as you want, provided you meet the age eligibility criteria. This is why calculating your remaining attempts based on age is so important.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Can female candidates apply for NDA exam?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes, as of 2022, female candidates are eligible to apply for the NDA exam. The Supreme Court of India mandated the inclusion of women in the NDA, making it open to all genders. The age limits and attempt calculations remain the same for both male and female candidates.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    What happens if I exceed the age limit by a few days?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Unfortunately, age limits for NDA are strictly enforced. Even exceeding the limit by a single day makes you ineligible for that particular exam. This is why our <a href="https://aicalculator.in/nda-attempt-calculator/" class="internal-link">NDA calculator</a> is precise to the day level to help you plan accordingly.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    How accurate is this NDA attempt calculator?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Our calculator is highly accurate as it uses the official age criteria and cutoff dates (April 1st and October 1st) as prescribed by UPSC. However, we recommend verifying the latest notification from UPSC before applying, as rules may change. The calculator is updated regularly to reflect any policy changes.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    What documents do I need for age proof in NDA application?
+                    <span class="faq-icon">▼</span>
+                </button>
+                <div class="faq-answer">
+                    <p>For age verification in NDA application, you need to provide your Class 10th/Matriculation certificate or any other equivalent certificate recognized by the Central/State Board/University as proof of age. Make sure the date of birth mentioned matches exactly with what you enter in our calculator.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="content-section">
+            <h2>Ready to Calculate Your NDA Attempts?</h2>
+            <p>Don't leave your military career to chance. Use our free NDA Attempt Calculator to:</p>
+            <ul>
+                <li>Find out exactly how many NDA attempts you have remaining</li>
+                <li>Plan your preparation strategy effectively</li>
+                <li>Avoid age-related disappointments</li>
+                <li>Make informed decisions about your career timeline</li>
+            </ul>
+            <p>Visit our comprehensive <a href="https://aicalculator.in/nda-attempt-calculator/" class="internal-link">NDA Attempt Calculator page</a> for detailed results and personalized recommendations for your NDA preparation journey.</p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 AI Calculator. Empowering NDA aspirants with accurate calculations. 
+        <a href="https://aicalculator.in/">Visit our main website</a> for more calculators.</p>
+    </footer>
+
+    <script>
+        // FAQ Accordion functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('.faq-icon');
+                    const isActive = answer.classList.contains('active');
+                    
+                    // Close all other FAQ items
+                    document.querySelectorAll('.faq-answer').forEach(ans => {
+                        ans.classList.remove('active');
+                    });
+                    document.querySelectorAll('.faq-icon').forEach(ico => {
+                        ico.classList.remove('active');
+                    });
+                    document.querySelectorAll('.faq-question').forEach(q => {
+                        q.setAttribute('aria-expanded', 'false');
+                    });
+                    
+                    // Toggle current item
+                    if (!isActive) {
+                        answer.classList.add('active');
+                        icon.classList.add('active');
+                        this.setAttribute('aria-expanded', 'true');
+                    }
+                });
+            });
+            
+            // Form submission handler
+            const form = document.getElementById('ndaForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const dob = document.getElementById('dob').value;
+                const gender = document.getElementById('gender').value;
+                const caste = document.getElementById('caste').value;
+                
+                // Validate form
+                if (!dob || !gender || !caste) {
+                    alert('Please fill in all required fields before proceeding.');
+                    return;
+                }
+                
+                // Validate date of birth (must be reasonable for NDA eligibility)
+                const dobDate = new Date(dob);
+                const currentDate = new Date();
+                const age = (currentDate - dobDate) / (1000 * 60 * 60 * 24 * 365.25);
+                
+                if (age < 15) {
+                    alert('You must be at least 15 years old to be eligible for NDA exam.');
+                    return;
+                }
+                
+                if (age > 25) {
+                    alert('You may have exceeded the maximum age limit for NDA exam. Please check the eligibility criteria.');
+                    return;
+                }
+                
+                // Show loading state
+                const button = document.querySelector('.calculate-btn');
+                const originalText = button.textContent;
+                button.textContent = 'Calculating...';
+                button.disabled = true;
+                
+                // Simulate processing time and redirect
+                setTimeout(() => {
+                    // Store form data in sessionStorage for the target page (if needed)
+                    sessionStorage.setItem('ndaFormData', JSON.stringify({
+                        dob: dob,
+                        gender: gender,
+                        caste: caste,
+                        submittedAt: new Date().toISOString()
+                    }));
+                    
+                    // Redirect to the calculator page
+                    window.location.href = 'https://aicalculator.in/nda-attempt-calculator/';
+                }, 1000);
+            });
+            
+            // Set max date for date input (today's date)
+            const dobInput = document.getElementById('dob');
+            const today = new Date();
+            const maxDate = new Date(today.getFullYear() - 15, today.getMonth(), today.getDate());
+            dobInput.max = maxDate.toISOString().split('T')[0];
+            
+            // Add smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+        
+        // Performance optimization: Lazy loading for non-critical elements
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            // Observe content sections for animation
+            document.querySelectorAll('.content-section, .faq-section').forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+        }
+    </script>
+</body>
+</html>
